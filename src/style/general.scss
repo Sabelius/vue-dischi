@@ -1,6 +1,10 @@
+$grid-columns: 15;
+$grid-gutter-width: 15px;
+
 @import '~bootstrap/scss/bootstrap';
 
 body{
     background: rgb(55, 55, 90);
     background: linear-gradient(180deg, rgb(37, 56, 73) 10%, rgba(34,126,195,1) 100%);
+    min-height: 100vh;
 }

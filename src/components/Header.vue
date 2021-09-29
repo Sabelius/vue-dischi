@@ -1,7 +1,7 @@
 <template>
 <div class=" container-fluid">
     <div class="row">
-        <div class="col-12  header-container d-flex">
+        <div class="col-15  header-container d-flex">
           <img src="https://www.michelafranceschina.it/Burattini_Erranti/files/stacks-image-c5a4a2c.jpg">
         </div>
     </div>

@@ -1,37 +1,52 @@
 <template>
-  <div class="row">
-    <div
-      v-for="cd in musics"
-      :key="cd"
-      class="col-lg-3 col-md-4 col-sm-6 col-12 pt-5"
-    >
-      <div class="cd-container m-1">
-        <img :src="cd.poster" class="pt-3 img-fluid" />
-        <h5 class="p-2 text-uppercase">{{ cd.title }}</h5>
-        <h6 class="pt-1">{{ cd.author }}</h6>
-        <p class="pb-2">{{ cd.year }}</p>
+  <section>
+    <div class="row" v-if="boolean">
+      <div
+        v-for="cd in musics"
+        :key="cd"
+        class="col-lg-3 col-md-5 col-sm-5 col-15 pt-5"
+      >
+        <div class="cd-container m-1">
+          <img :src="cd.poster" class="pt-3 img-fluid" />
+          <h6 class="p-2 text-uppercase">{{ cd.title }}</h6>
+          <p class="pt-1">{{ cd.author }}</p>
+          <p class="pb-2">{{ cd.year }}</p>
+        </div>
       </div>
     </div>
-  </div>
+    <div class="row" v-else>
+      <div class="col-15 d-flex justify-content-center">
+        <Loader msg="loading..." />
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
 import axios from "axios";
+import Loader from "./Loader.vue";
 
 export default {
   name: "discChoices",
+  components: {
+    Loader,
+  },
 
   data() {
     return {
       musics: [],
+      boolean: false,
     };
   },
   created() {
-    axios
-      .get("https://flynn.boolean.careers/exercises/api/array/music")
-      .then((response) => {
-        this.musics = response.data.response.slice();
-      });
+    setTimeout(() => {
+      axios
+        .get("https://flynn.boolean.careers/exercises/api/array/music")
+        .then((response) => {
+          this.musics = response.data.response.slice();
+          this.boolean = true;
+        });
+    },1000);
   },
 };
 </script>
@@ -50,11 +65,10 @@ img {
   width: 80%;
 }
 
-h5 {
+h6 {
   color: $title-color;
 }
 
-h6,
 p {
   color: $subtitle-color;
 }
