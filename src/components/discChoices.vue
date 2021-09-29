@@ -42,7 +42,7 @@ export default {
 .cd-container {
   background-color: $back-ground;
   width: 70%;
-  height: 350px;
+  min-height: 350px;
   cursor: pointer;
 }
 
