@@ -1,9 +1,10 @@
 <template>
   <section>
+    <selectGenre :genres="genres" @search="genreSearch" />
     <div class="row" v-if="boolean">
       <div
-        v-for="cd in musics"
-        :key="cd"
+        v-for="cd in filterGenreDiscs"
+        :key="cd.title"
         class="col-lg-3 col-md-5 col-sm-5 col-15 pt-5"
       >
         <div class="cd-container m-1">
@@ -25,19 +26,39 @@
 <script>
 import axios from "axios";
 import Loader from "./Loader.vue";
+import selectGenre from "./selectGenre.vue";
 
 export default {
   name: "discChoices",
   components: {
     Loader,
+    selectGenre,
   },
 
   data() {
     return {
       musics: [],
+      genres: [],
       boolean: false,
+      selectedGenre: '',
     };
   },
+
+  computed: {
+    filterGenreDiscs() {
+      const newDiscLIst = this.musics.filter((element) => {
+        return element.genre.toLowerCase() == this.selectedGenre.toLowerCase();
+      });
+      return newDiscLIst;
+    },
+  },
+
+  methods: {
+    genreSearch(genre) {
+      this.selectedGenre = genre;
+    },
+  },
+
   created() {
     setTimeout(() => {
       axios
@@ -45,8 +66,13 @@ export default {
         .then((response) => {
           this.musics = response.data.response.slice();
           this.boolean = true;
+
+          this.musics.forEach((element) => {
+            if (!this.genres.includes(element.genre))
+              this.genres.push(element.genre);
+          });
         });
-    },1000);
+    }, 1000);
   },
 };
 </script>
