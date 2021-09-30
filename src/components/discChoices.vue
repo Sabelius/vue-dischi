@@ -2,6 +2,8 @@
   <section>
     <div class="row" v-if="boolean">
       <selectGenre :genres="genres" @search="genreSearch" />
+      <h6 class="pt-4 col-15">Or</h6>
+      <selectArtist :artists="artists" @search="artistSearch" />
       <div
         v-for="cd in filterGenreDiscs"
         :key="cd.title"
@@ -27,39 +29,51 @@
 import axios from "axios";
 import Loader from "./Loader.vue";
 import selectGenre from "./selectGenre.vue";
+import selectArtist from "./selectArtist.vue";
 
 export default {
   name: "discChoices",
   components: {
     Loader,
     selectGenre,
+    selectArtist,
   },
 
   data() {
     return {
       musics: [],
       genres: [],
+      artists: [],
       boolean: false,
-      selectedGenre: '',
+      selectedGenre: "",
+      selectedArtist: "",
     };
   },
 
   computed: {
     filterGenreDiscs() {
-      if( !(this.selectedGenre =="")){
-      const newDiscLIst = this.musics.filter((element) => {
-        return element.genre.toLowerCase() == this.selectedGenre.toLowerCase();
-        
-      });
-      return newDiscLIst;
+      let newDiscList = [];
+      if ((this.selectedGenre == "") && (this.selectedArtist == "")) {
+        newDiscList = this.musics;
+      } else if (this.genres.includes(this.selectedGenre)) {
+        newDiscList = this.musics.filter(
+          (element) => element.genre == this.selectedGenre
+        );
+      } else if (this.artists.includes(this.selectedArtist)) {
+        newDiscList = this.musics.filter(
+          (element) => element.author == this.selectedArtist
+        );
       }
-      return this.musics;
+      return newDiscList;
     },
   },
 
   methods: {
     genreSearch(genre) {
       this.selectedGenre = genre;
+    },
+    artistSearch(author) {
+      this.selectedArtist = author;
     },
   },
 
@@ -76,6 +90,10 @@ export default {
               this.genres.push(element.genre);
           });
 
+          this.musics.forEach((element) => {
+            if (!this.artists.includes(element.author))
+              this.artists.push(element.author);
+          });
         });
     }, 1000);
   },

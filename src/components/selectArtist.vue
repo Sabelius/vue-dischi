@@ -1,13 +1,13 @@
 <template>
   <section class="pt-4 col-15">
-      <label>Choose a genre: </label>
+    <label>Choose an artist: </label>
     <select
-      v-model.trim="selectedGenre"
-      @change="$emit('search', selectedGenre)"
+      v-model.trim="selectedArtist"
+      @change="$emit('search', selectedArtist)" 
     >
-      >
-      <option v-for="genre in genres" :key="genre" :value="genre">
-        {{ genre }}
+      >)
+      <option v-for="author in artists" :key="author" :value="author">
+        {{ author }}
       </option>
     </select>
   </section>
@@ -15,14 +15,15 @@
 
 <script>
 export default {
-  name: "selectGenre",
-  props: ["genres"],
+  name: "selectArtist",
+  props: ["artists"],
   data() {
     return {
-      selectedGenre: " ",
+      selectedArtist: " ",
     };
   },
 };
+
 </script>
 
 <style lang="scss" scoped>
@@ -35,4 +36,5 @@ label{
     color: $title-color;
     padding-right: 10px;
 }
+
 </style>
