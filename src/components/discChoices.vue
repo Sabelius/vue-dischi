@@ -1,7 +1,7 @@
 <template>
   <section>
-    <selectGenre :genres="genres" @search="genreSearch" />
     <div class="row" v-if="boolean">
+      <selectGenre :genres="genres" @search="genreSearch" />
       <div
         v-for="cd in filterGenreDiscs"
         :key="cd.title"
@@ -46,10 +46,14 @@ export default {
 
   computed: {
     filterGenreDiscs() {
+      if( !(this.selectedGenre =="")){
       const newDiscLIst = this.musics.filter((element) => {
         return element.genre.toLowerCase() == this.selectedGenre.toLowerCase();
+        
       });
       return newDiscLIst;
+      }
+      return this.musics;
     },
   },
 
@@ -71,6 +75,7 @@ export default {
             if (!this.genres.includes(element.genre))
               this.genres.push(element.genre);
           });
+
         });
     }, 1000);
   },

@@ -2,10 +2,12 @@
   <section class="pt-2">
     <select
       v-model.trim="selectedGenre"
-      @change="$emit('search', selectedGenre)">
+      @change="$emit('search', selectedGenre)"
     >
-      <option value=''>All genres</option>
-      <option v-for="genre in genres" :key="genre" :value="genre">{{ genre }}</option>
+      >
+      <option v-for="genre in genres" :key="genre" :value="genre">
+        {{ genre }}
+      </option>
     </select>
   </section>
 </template>
