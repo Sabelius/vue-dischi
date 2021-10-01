@@ -91,7 +91,6 @@ export default {
           });
 
           this.musics.forEach((element) => {
-            if (!this.artists.includes(element.author))
               this.artists.push(element.author);
           });
         });
